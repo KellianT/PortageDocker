@@ -14,10 +14,10 @@ services:
     command: ["--default-authentication-plugin=mysql_native_password"]
     networks:
       - piwigo
-    environment:
-      MYSQL_USER: "piwigo"
-      MYSQL_PASSWORD: "piwigo"
-      MYSQL_DATABASE: "piwigo"
+    environment: #TODo : Passer les secrets en variables d'environnement, format : "${ma_variable_denvironnement}"
+      MYSQL_USER: "piwigo" #TODO
+      MYSQL_PASSWORD: "piwigo" #TODO
+      MYSQL_DATABASE: "piwigo" #TODO
       MYSQL_RANDOM_ROOT_PASSWORD: "true"
 
 networks:
