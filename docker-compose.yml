@@ -9,7 +9,7 @@ services:
       - "80:80"
 
   mysql:
-    container_name: piwigo_mysql
+    container_name: piwigo_mysql #nom à utiliser lors de la connexion de la DB a piwigo "Database configuration : Host = <Nom_du_conteneur>"
     image: mysql:8.0.18
     command: ["--default-authentication-plugin=mysql_native_password"]
     networks:
@@ -19,6 +19,21 @@ services:
       MYSQL_PASSWORD: "piwigo" #TODO
       MYSQL_DATABASE: "piwigo" #TODO
       MYSQL_RANDOM_ROOT_PASSWORD: "true"
+
+# TODO : Passer proxy Nginx
+nginx:
+  image:
+    container_name: 
+    volumes: 
+
+    networks: 
+      - piwigo
+
+    links: 
+      - piwigo
+
+      
+
 
 networks:
   piwigo:
