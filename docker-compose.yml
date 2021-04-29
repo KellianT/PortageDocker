@@ -21,18 +21,20 @@ services:
       MYSQL_RANDOM_ROOT_PASSWORD: "true"
 
 # TODO : Passer proxy Nginx
-nginx:
-  image:
-    container_name: 
-    volumes: 
+# nginx:
+#   image:
+#     container_name: 
+#     volumes: 
 
-    networks: 
-      - piwigo
+#     networks: 
+#       - piwigo
 
-    links: 
-      - piwigo
+#     links: 
+#       - piwigo
+#     ports:
+#       - 80:80
 
-      
+
 
 
 networks:

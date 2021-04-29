@@ -1,18 +1,26 @@
+# Télécharge l'image docker su serveur PHP + Apache2
 FROM php:7.3-apache
-
-WORKDIR /var/www/html
-
 
 #TODO : A rendre plus propre, séparer les commandes et les commenter pour expliquer leur utilité
 
-RUN apt-get update && apt-get -y install curl libzip-dev unzip && apt-get install -y libpng-dev && \
-cd /var/www && curl -o piwigo.zip http://piwigo.org/download/dlcounter.php?code=latest && \
-unzip piwigo.zip && rm piwigo.zip && rm -rf html && mv piwigo html && docker-php-ext-install mysqli && \ 
-sed 's/# The directory where shm and other runtime files will be stored./ServerName localhost/' /etc/apache2/apache2.conf && \
-sudo apt-get -y install php-common php-mbstring php-xmlrpc php-gd php-xml php-intl php-mysql php-cli php-ldap php-zip php-curl && \
-docker-php-ext-install gd 
+#Synchronisation des paquets et installation de la librairie de référence officielle pour PNG   
+RUN apt-get update && apt-get -y install libpng-dev
 
+# Permet d'installer des extensions PHP avec Docker
+RUN docker-php-ext-install mysqli gd exif
+
+#Copie des fichiers sources vers la destination, évite d'aller chercher le zip et les opérations longues
+COPY Piwigo/ /var/www/html/
+
+#Ouvrir les droits de lecture, écriture et éxeutions aux utilisateurs
+RUN chmod 777  -R /var/www/html/
+
+# Redémarrage du serveur Apache
 RUN apache2ctl restart
 
+#Dossier de travail
+WORKDIR /var/www/html
+
+#Port sur lequel on renvoie les informations
 EXPOSE 80
 
